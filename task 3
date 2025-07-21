@@ -1,0 +1,51 @@
+import pandas as pd
+from random import sample
+
+# 🎬 Mood-tagged movie data
+movies = [
+    {'title': 'Zindagi Na Milegi Dobara', 'mood': 'happy'},
+    {'title': 'The Pursuit of Happyness', 'mood': 'motivated'},
+    {'title': 'Joker', 'mood': 'dark'},
+    {'title': 'Tamasha', 'mood': 'confused'},
+    {'title': '3 Idiots', 'mood': 'stressed'},
+    {'title': 'Yeh Jawaani Hai Deewani', 'mood': 'adventurous'},
+    {'title': 'Interstellar', 'mood': 'curious'},
+    {'title': 'Dear Zindagi', 'mood': 'emotional'},
+    {'title': 'Queen', 'mood': 'empowered'},
+    {'title': 'Barfi', 'mood': 'peaceful'},
+    {'title': 'Drishyam', 'mood': 'tense'},
+    {'title': 'Chhichhore', 'mood': 'nostalgic'},
+    {'title': 'PK', 'mood': 'lighthearted'},
+    {'title': 'MS Dhoni: The Untold Story', 'mood': 'inspired'},
+]
+
+df = pd.DataFrame(movies)
+
+# 🎯 Main logic
+def recommend_by_mood(user_mood):
+    user_mood = user_mood.lower().strip()
+    matched = df[df['mood'] == user_mood]
+
+    if matched.empty:
+        print("\n😕 Sorry, no exact mood match found.")
+        print("But here are some general feel-good movies:")
+        print("➤", ", ".join(sample(list(df['title']), 3)))
+    else:
+        print(f"\n🎬 Movies for mood '{user_mood}':")
+        for movie in sample(list(matched['title']), min(3, len(matched))):
+            print("➤", movie)
+
+# 🧑‍💻 Command Line App
+def main():
+    print("🎭 Welcome to Mood-based Movie Recommender 🎥")
+    print("Type how you’re feeling right now (e.g., happy, stressed, nostalgic)")
+    print("Type 'exit' to leave.\n")
+
+    while True:
+        mood = input("Your mood: ")
+        if mood.lower() == 'exit':
+            break
+        recommend_by_mood(mood)
+
+if __name__ == "__main__":
+    main()
